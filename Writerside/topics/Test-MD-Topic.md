@@ -10,3 +10,11 @@ The goal is to help users understand:
 - metric definitions
 - data ownership
 - calculation logic
+
+## Contents
+
+**Datasets:** Users Dataset, Payments Dataset
+
+**Metrics:** Monthly Active Users, Conversion Rate, Revenue
+
+**Glossary:** key business terms used across this documentation
