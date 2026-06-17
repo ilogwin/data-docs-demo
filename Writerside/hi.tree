@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="hi"
+                 name="Help Instance"
+                 start-page="Default-topic.md">
+
+    <toc-element topic="Test-MD-Topic.md"/>
+    <toc-element topic="Payments-Dataset.md"/>
+    <toc-element topic="Monthly-Active-Users.md"/>
+    <toc-element topic="Conversion-Rate.md"/>
+    <toc-element topic="Revenue.md"/>
+    <toc-element topic="Glossary.md"/>
+    <toc-element topic="Users-Dataset.md"/>
+    <toc-element topic="Default-topic.md"/>
+</instance-profile>
