@@ -1,4 +1,4 @@
-# Documentation Samples — Technical Writer Portfolio
+# Documentation Samples - Technical Writer Portfolio
 
 This repository contains documentation samples written for the [Owncast](https://github.com/owncast/owncast) open-source live streaming server, created as part of a technical writing portfolio.
 
@@ -6,10 +6,10 @@ This repository contains documentation samples written for the [Owncast](https:/
 
 Built with [JetBrains Writerside](https://www.jetbrains.com/writerside/) (docs-as-code).
 
-- **Architecture Overview** — system design: ingest pipeline, backend request path, frontend, database schema, external connections (with diagrams)
-- **Webhooks API Reference** — full API reference for Owncast's webhook system: authentication, endpoints, event types, payload formats, and working receiver code (Python, Node.js)
-- **Data object reference** — User, Chat Message, Viewer Metrics
-- **Glossary** — key terms used across the webhook system
+- **Architecture Overview** - system design: ingest pipeline, backend request path, frontend, database schema, external connections (with diagrams)
+- **Webhooks API Reference** - full API reference for Owncast's webhook system: authentication, endpoints, event types, payload formats, and working receiver code (Python, Node.js)
+- **Data object reference** - User, Chat Message, Viewer Metrics
+- **Glossary** - key terms used across the webhook system
 
 Start here: [`Writerside/topics/Owncast-Documentation.md`](Writerside/topics/Owncast-Documentation.md)
 
