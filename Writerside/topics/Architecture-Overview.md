@@ -15,14 +15,14 @@ each piece lives in the codebase.
 The system has four distinct layers. Each has a single responsibility and a
 clear boundary.
 
-![System layers](layers.png)
+![System layers](../images/layers.png)
 
 ## 2. Stream ingest: from OBS to storage
 
 When a broadcaster clicks "Start Streaming" in OBS, a chain of three steps
 runs before any viewer can watch. This is the ingest pipeline.
 
-![Stream ingest pipeline](ingest.png)
+![Stream ingest pipeline](../images/ingest.png)
 
 > ffmpeg is an external binary, not Go code. Owncast spawns it as a child
 > process and pipes raw video data into its stdin. This is intentional:
@@ -36,7 +36,7 @@ All HTTP traffic — REST API, WebSocket chat, admin panel, static frontend —
 enters through a single Go HTTP server. Here is how a request travels from
 the network to the database and back.
 
-![Backend request path](backend.png)
+![Backend request path](../images/backend.png)
 
 Each layer only talks to the layer directly below it. A handler never
 queries the database directly — it always goes through a service. A service
@@ -62,7 +62,7 @@ is built separately from the Go backend and compiled into static files. At
 runtime the Go server serves these files — no Node.js process runs in
 production.
 
-![Frontend architecture](frontend.png)
+![Frontend architecture](../images/frontend.png)
 
 The video player uses `hls.js` — a JavaScript library that fetches HLS
 segments directly from disk or S3. The Go backend is not in the video
@@ -74,13 +74,13 @@ Go WebSocket server.
 Owncast uses a single SQLite file. All tables live in one database. There is
 no migrations framework — schema changes are handled in Go code at startup.
 
-![Database schema](erd.png)
+![Database schema](../images/erd.png)
 
 ## 6. External connections
 
 Owncast connects to three types of external systems beyond the browser.
 
-![External connections](external.png)
+![External connections](../images/external.png)
 
 - **Mastodon / Fediverse** — via the ActivityPub protocol (`activitypub/`).
   Viewers on Mastodon can follow an Owncast server as if it were a social
