@@ -1,0 +1,77 @@
+@startuml
+autonumber "<b>0"
+skinparam roundcorner 10
+skinparam sequence {
+  ArrowColor #3e3e3e
+  LifeLineBorderColor #3e3e3e
+  LifeLineBackgroundColor #3e3e3e
+}
+skinparam sequenceParticipant {
+  borderColor #grey
+  borderThickness 2
+  backgroundColor #lightblue
+}
+skinparam note {
+  borderColor #89A985
+  backgroundColor #FFF5AD
+}
+skinparam responseMessageBelowArrow true
+
+participant "service" as S #CDE498
+database "DB" as DB #beaed4
+queue "RMQ" as RMQ #white
+
+S -> S: Run
+note right: Запуск по расписанию
+
+S -> S: GetPendingV1()
+S -> S: Process()
+note right
+  Определение уведомлений,
+  которые необходимо отправить
+end note
+
+group Transaction
+  S -> DB: **Get()**
+  note right
+    Получение уведомлений со статусом **wait**
+    из таблицы **service.notifications**.
+    Если не найдены - возвращаем nil
+  end note
+  DB --> S
+
+  S -> DB: **Set()**
+  note right
+    Обновление статуса уведомлений на **processing**
+    в таблице **service.notifications**
+  end note
+  DB --> S
+end
+
+note over S, RMQ
+  Если нет уведомлений, которые необходимо отправить - выходим
+end note
+
+S -> S: Status
+note right
+  Отправка уведомления.
+  Если получена ошибка - статус уведомления меняем на **error**.
+  Если лимит ошибок не превышен - устанавливаем статус **wait**
+end note
+
+S -> RMQ: **eventV1**
+note right
+  Отправка запроса в сервис **notification**
+  для отправки уведомления пользователю,
+  возвращаем статус **sent**
+end note
+RMQ --> S
+
+S -> DB: **Set()**
+note right
+  Обновление статуса уведомления
+  в таблице **service.notifications**
+end note
+DB --> S
+
+@enduml
