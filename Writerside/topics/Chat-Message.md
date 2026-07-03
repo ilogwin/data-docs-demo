@@ -10,7 +10,7 @@ webhook event.
 | Field | Description |
 |---|---|
 | id | Unique identifier for the message |
-| user | The [User](user.md) object of the message sender |
+| user | The [User](User.md) object of the message sender |
 | clientId | Identifies the specific connection/session that sent the message |
 | body | The message content, rendered as HTML |
 | rawBody | The original, unrendered message text |
@@ -23,5 +23,6 @@ CHAT
 
 ## See also
 
-- [User](user.md) — structure of the `user` field
-- [Webhooks API Reference](webhooks-api-reference.md) — full CHAT payload example and receiver code
+- [User](User.md) — structure of the `user` field
+- [Webhooks API Reference](Webhooks-Api-Reference.md) — full CHAT payload example and receiver code
+- [Owncast Documentation](Owncast-Documentation.md) — back to overview

@@ -19,3 +19,5 @@ A number identifying a single connection to Owncast. A user can have multiple cl
 ## user.id
 
 A unique identifier for a chat user, independent of their current connection — unlike clientId, it stays the same across sessions.
+
+*↑ Back to [Owncast Documentation](Owncast-Documentation.md).*

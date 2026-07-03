@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rules SYSTEM "https://resources.jetbrains.com/writerside/1.0/redirection-rules.dtd">
+<rules>
+    <!-- format is as follows
+    <rule id="<unique id>">
+        <accepts>page.html</accepts>
+    </rule>
+    -->
+    <rule id="2f2de81b">
+        <description>Created after removal of "This is the first topic" from Help Instance</description>
+        <accepts>Default-topic.html</accepts>
+    </rule>
+    <rule id="573bda95">
+        <description>Created after removal of "Service" from Help Instance</description>
+        <accepts>ServiceTest.html</accepts>
+    </rule>
+    <rule id="19d038ec">
+        <description>Created after removal of "Current Viewer Count" from Help Instance</description>
+        <accepts>Chat-Message.html</accepts>
+    </rule>
+    <rule id="33665081">
+        <description>Created after removal of "Session Max Viewer Count" from Help Instance</description>
+        <accepts>Session Max Viewer Count.html</accepts>
+    </rule>
+    <rule id="70da3365">
+        <description>Created after removal of "Overall Max Viewer Count" from Help Instance</description>
+        <accepts>Overall Max Viewer Count.html</accepts>
+    </rule>
+</rules>

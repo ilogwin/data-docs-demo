@@ -1,6 +1,6 @@
-# Owncast API Reference: Webhooks
+# API Reference: Webhooks
 
-[Owncast](https://github.com/owncast/owncast) is a self-hosted, open-source live streaming server. This document covers its webhook system, which lets external applications react to server events (chat messages, stream start/stop, and more) in real time.
+This document covers Owncast's webhook system, which lets external applications react to server events (chat messages, stream start/stop, and more) in real time.
 ## What are webhooks
 
 Webhooks are the opposite of polling. Instead of your integration asking Owncast "did anything happen?" on a schedule, Owncast calls your server the moment something happens.
@@ -421,4 +421,8 @@ Owncast does **not** retry failed webhook deliveries. If your endpoint is down w
 - [Access tokens](https://owncast.online/docs/api/) - for REST API integrations that don't need webhooks
 ---
 
-*Based on Owncast v0.2.4 · May 2026*
+*Based on Owncast v0.2.x · [github.com/owncast/owncast](https://github.com/owncast/owncast)*
+
+---
+
+*↑ Back to [Owncast Documentation](Owncast-Documentation.md).*
