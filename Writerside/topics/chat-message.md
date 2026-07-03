@@ -2,14 +2,15 @@
 
 ## Description
 
-Represents a single chat message sent by a user. Sent as part of the CHAT webhook event.
+Represents a single chat message sent by a user. Sent as part of the CHAT
+webhook event.
 
 ## Fields
 
 | Field | Description |
-|---------|-------------|
+|---|---|
 | id | Unique identifier for the message |
-| user | The User object of the message sender |
+| user | The [User](user.md) object of the message sender |
 | clientId | Identifies the specific connection/session that sent the message |
 | body | The message content, rendered as HTML |
 | rawBody | The original, unrendered message text |
@@ -19,3 +20,8 @@ Represents a single chat message sent by a user. Sent as part of the CHAT webhoo
 ## Source event
 
 CHAT
+
+## See also
+
+- [User](user.md) — structure of the `user` field
+- [Webhooks API Reference](webhooks-api-reference.md) — full CHAT payload example and receiver code
