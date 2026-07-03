@@ -12,6 +12,9 @@ each piece lives in the codebase.
 
 ## 1. System layers
 
+At a high level, Owncast receives an RTMP stream, transcodes it into HLS,
+serves the frontend, and emits webhook events as activity occurs.
+
 The system has four distinct layers. Each has a single responsibility and a
 clear boundary.
 
@@ -32,15 +35,15 @@ runs before any viewer can watch. This is the ingest pipeline.
 
 ## 3. Backend internals: request path
 
-All HTTP traffic — REST API, WebSocket chat, admin panel, static frontend —
+All HTTP traffic - REST API, WebSocket chat, admin panel, static frontend -
 enters through a single Go HTTP server. Here is how a request travels from
 the network to the database and back.
 
 ![Backend request path](../images/backend.png)
 
 Each layer only talks to the layer directly below it. A handler never
-queries the database directly — it always goes through a service. A service
-never writes SQL directly — it always goes through persistence. This
+queries the database directly - it always goes through a service. A service
+never writes SQL directly - it always goes through persistence. This
 separation makes each layer testable in isolation.
 
 **What lives in `services/`:**
@@ -59,12 +62,12 @@ separation makes each layer testable in isolation.
 
 The frontend is a Next.js application that lives in the `web/` directory. It
 is built separately from the Go backend and compiled into static files. At
-runtime the Go server serves these files — no Node.js process runs in
+runtime the Go backend serves these files - no Node.js process runs in
 production.
 
 ![Frontend architecture](../images/frontend.png)
 
-The video player uses `hls.js` — a JavaScript library that fetches HLS
+The video player uses `hls.js` - a JavaScript library that fetches HLS
 segments directly from disk or S3. The Go backend is not in the video
 playback path once streaming starts. Chat, however, always goes through the
 Go WebSocket server.
@@ -72,7 +75,7 @@ Go WebSocket server.
 ## 5. Database schema (key tables)
 
 Owncast uses a single SQLite file. All tables live in one database. There is
-no migrations framework — schema changes are handled in Go code at startup.
+no migrations framework - schema changes are handled in Go code at startup.
 
 ![Database schema](../images/erd.png)
 
@@ -82,18 +85,21 @@ Owncast connects to three types of external systems beyond the browser.
 
 ![External connections](../images/external.png)
 
-- **Mastodon / Fediverse** — via the ActivityPub protocol (`activitypub/`).
+- **Mastodon / Fediverse** - via the ActivityPub protocol (`activitypub/`).
   Viewers on Mastodon can follow an Owncast server as if it were a social
   media account; when a stream goes live, a post appears in their timeline.
-- **Bots / integrations** — via the REST API and webhooks (`webhooks/`).
-- **CDN** — for video segment delivery when S3-compatible storage is
+- **Bots / integrations** - via the REST API and webhooks (`webhooks/`).
+- **CDN** - for video segment delivery when S3-compatible storage is
   configured.
-- **Owncast directory** — the public stream listing that self-hosted servers
+- **Owncast directory** - the public stream listing that self-hosted servers
   can optionally publish to.
+## See also
+
+- [Webhooks API Reference](Webhooks-Api-Reference.md) - how the `webhooks/` service publishes outbound events
+- [Viewer Metrics](Viewer-Metrics.md) - fields carried inside the STREAM_TITLE_UPDATED webhook payload
+- [Owncast Documentation](Owncast-Documentation.md) - back to overview
 ---
 
-*Based on Owncast v0.2.x · [github.com/owncast/owncast](https://github.com/owncast/owncast)*
+*Based on Owncast v0.2.4 · [github.com/owncast/owncast](https://github.com/owncast/owncast)*
 
 ---
-
-*↑ Back to [Owncast Documentation](Owncast-Documentation.md).*

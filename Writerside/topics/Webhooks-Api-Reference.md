@@ -1,6 +1,7 @@
 # API Reference: Webhooks
 
 This document covers Owncast's webhook system, which lets external applications react to server events (chat messages, stream start/stop, and more) in real time.
+
 ## What are webhooks
 
 Webhooks are the opposite of polling. Instead of your integration asking Owncast "did anything happen?" on a schedule, Owncast calls your server the moment something happens.
@@ -9,10 +10,10 @@ You register a URL. Owncast sends an HTTP POST to that URL whenever a specific e
 
 ```
 Without webhooks (polling):
-Your app -GET /status → Owncast (every 5 seconds, most calls return nothing new)
+Your app ──GET /status──> Owncast   (every 5 seconds, most calls return nothing new)
  
 With webhooks (push):
-Owncast -POST /your-endpoint → Your app (only when something actually happens)
+Owncast ──POST /your-endpoint──> Your app   (only when something actually happens)
 ```
 
 **When to use webhooks instead of the REST API:**
@@ -20,7 +21,6 @@ Owncast -POST /your-endpoint → Your app (only when something actually happens)
 - You want to build a Discord bot that announces when the stream goes live
 - You need to log all chat messages to an external database
 - You want to trigger other services when a specific event occurs
-
   **When to use the REST API instead:**
 - You need to query current state (how many viewers right now?)
 - You want to send something to Owncast (post a message, change the title)
@@ -242,10 +242,10 @@ When a subscribed event occurs, Owncast sends a POST request to your registered 
 }
 ```
 
-| Field | Type | Description                                                      |
-|---|---|------------------------------------------------------------------|
+| Field | Type | Description |
+|---|---|---|
 | `type` | string | The event type that fired (matches values in your `events` list) |
-| `eventData` | object | Event-specific payload (structure varies by type - see below)    |
+| [`eventData`](Glossary.md#eventdata) | object | Event-specific payload (structure varies by type - see below) |
 
 ### STREAM_STARTED and STREAM_STOPPED
 
@@ -403,12 +403,12 @@ curl -X POST http://your-owncast-server:8080/api/admin/webhooks/delete \
 
 ## Error handling reference
 
-| HTTP status | Meaning | Action                                                              |
-|---|---|---------------------------------------------------------------------|
-| `200` | Success | -                                                                   |
+| HTTP status | Meaning | Action |
+|---|---|---|
+| `200` | Success | -  |
 | `400` | Bad request | Check request body: missing fields, invalid URL, unknown event type |
-| `401` | Unauthorized | Check Basic Auth credentials; admin password may have changed       |
-| `500` | Server error | Check Owncast server logs                                           |
+| `401` | Unauthorized | Check Basic Auth credentials; admin password may have changed |
+| `500` | Server error | Check Owncast server logs |
 
 Owncast does **not** retry failed webhook deliveries. If your endpoint is down when an event fires, that event is lost. Design your receiver to be reliable, or poll the REST API as a fallback for critical events.
  
@@ -416,13 +416,16 @@ Owncast does **not** retry failed webhook deliveries. If your endpoint is down w
 
 ## Related resources
 
+- [Architecture Overview](Architecture-Overview.md) - how the `webhooks/` service fits into the overall system
+- [User](User.md) - structure of the `user` object referenced in CHAT and NAME_CHANGE payloads
+- [Chat Message](Chat-Message.md) - full structure of the CHAT payload's message data
+- [Viewer Metrics](Viewer-Metrics.md) - fields carried inside the STREAM_TITLE_UPDATED payload
 - [Full API reference](https://owncast.online/api/latest/#tag/Notifications) - Notifications section
 - [Building integrations](https://owncast.online/thirdparty/) - third-party tools built on Owncast
 - [Access tokens](https://owncast.online/docs/api/) - for REST API integrations that don't need webhooks
+- [Owncast Documentation](Owncast-Documentation.md) - back to overview
 ---
 
-*Based on Owncast v0.2.x · [github.com/owncast/owncast](https://github.com/owncast/owncast)*
+*Based on Owncast v0.2.4 · [github.com/owncast/owncast](https://github.com/owncast/owncast)*
 
 ---
-
-*↑ Back to [Owncast Documentation](Owncast-Documentation.md).*

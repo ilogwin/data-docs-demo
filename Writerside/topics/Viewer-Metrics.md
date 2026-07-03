@@ -11,10 +11,10 @@ inside the `status` object of the `STREAM_TITLE_UPDATED` webhook event.
 
 ## Source event
 
-`STREAM_TITLE_UPDATED` — all three fields arrive together inside the same
+`STREAM_TITLE_UPDATED` - all three fields arrive together inside the same
 `status` object; there is no separate event per metric.
 
 ## See also
 
 - [Webhooks API Reference](Webhooks-Api-Reference.md)
-- [Owncast Documentation](Owncast-Documentation.md) — back to overview
+- [Owncast Documentation](Owncast-Documentation.md) - back to overview
