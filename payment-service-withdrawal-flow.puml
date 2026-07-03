@@ -1,0 +1,106 @@
+@startuml
+autonumber
+skinparam roundcorner 10
+skinparam sequence {
+  ArrowColor #3e3e3e
+  LifeLineBorderColor #3e3e3e
+  LifeLineBackgroundColor #3e3e3e
+}
+skinparam sequenceParticipant {
+  borderColor #grey
+  borderThickness 2
+  backgroundColor #lightblue
+}
+skinparam note {
+  borderColor #89A985
+  backgroundColor #FFF5AD
+}
+skinparam responseMessageBelowArrow true
+
+participant "Client" as Client #white
+participant "LB" as GW #lightgrey
+participant "Service" as Service #CDE498
+database "DB" as DB #beaed4
+participant "External Service" as Ext #lightblue
+
+Client -> GW: **POST** /v1/payments/withdrawals
+GW -> Service: forward request
+
+group Обработка транзакции
+
+  group Создание записи
+    Service -> DB: **CreateEntity**\n(entity)
+    activate DB
+    DB --> Service
+    deactivate DB
+    note right
+      Создание записи
+      в таблице **entity**
+    end note
+
+    Service -> DB: **CreateHistoryRecord**\n(history)
+    activate DB
+    DB --> Service
+    deactivate DB
+    note right
+      Добавление записи об изменении
+    end note
+  end
+
+  group Обновление записи
+    Service -> DB: **UpdateEntity**\n(entity, status, params)
+    activate DB
+    DB --> Service
+    deactivate DB
+    note right
+      Обновление записи
+      в таблице **entity**
+    end note
+  end
+
+  Service -> DB: **UpdateFormAnswers**\n(form, result, isCompleted: true)
+  activate DB
+  DB --> Service
+  deactivate DB
+
+  Service -> DB: **CreateHistoryRecord**\n(history)
+  activate DB
+  DB --> Service
+  deactivate DB
+  note right
+    Создание записи об изменении статуса
+  end note
+
+  group Создание формы
+    Service -> DB: **CreateForm**\n(form)
+    activate DB
+    DB --> Service
+    deactivate DB
+    note right
+      Создание записи с ответами
+    end note
+  end
+end
+
+group Дополнительная проверка
+  Service -> Ext: **GetUserInfo**\n(token, client, userId)
+  activate Ext
+  Ext --> Service
+  deactivate Ext
+  note right
+    Запрос в смежный сервис
+    для получения информации
+    о пользователе
+  end note
+
+  Service -> Ext: **PublishEvent**\n(event)
+  note right
+    Публикация события,
+    т.к. выполнено условие
+  end note
+end
+
+Service --> GW: WithdrawalResponse
+GW --> Client: 200 OK, WithdrawalResponse
+
+@enduml
