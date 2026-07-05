@@ -7,9 +7,9 @@ This documentation focuses on two areas:
 - The webhook API used to integrate Owncast with external services.
 ## Where to start
 
-**New to the project?** Start with the [Architecture Overview](Architecture-Overview.md) — it explains how the system is structured end to end, from stream ingest to the frontend.
+**New to the project?** Start with the [Architecture Overview](Architecture-Overview.md) - it explains how the system is structured end to end, from stream ingest to the frontend.
 
-**Building an integration?** Go straight to the [Webhooks API Reference](Webhooks-Api-Reference.md) — it's self-contained and includes everything needed to register a webhook and handle incoming events.
+**Building an integration?** Go straight to the [Webhooks API Reference](Webhooks-Api-Reference.md) - it's self-contained and includes everything needed to register a webhook and handle incoming events.
 
 ## Contents
 

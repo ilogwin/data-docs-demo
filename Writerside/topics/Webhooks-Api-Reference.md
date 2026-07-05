@@ -10,10 +10,10 @@ You register a URL. Owncast sends an HTTP POST to that URL whenever a specific e
 
 ```
 Without webhooks (polling):
-Your app ──GET /status──> Owncast   (every 5 seconds, most calls return nothing new)
+Your app –GET /status –> Owncast   (every 5 seconds, most calls return nothing new)
  
 With webhooks (push):
-Owncast ──POST /your-endpoint──> Your app   (only when something actually happens)
+Owncast –POST /your-endpoint –> Your app   (only when something actually happens)
 ```
 
 **When to use webhooks instead of the REST API:**
@@ -21,7 +21,8 @@ Owncast ──POST /your-endpoint──> Your app   (only when something actuall
 - You want to build a Discord bot that announces when the stream goes live
 - You need to log all chat messages to an external database
 - You want to trigger other services when a specific event occurs
-  **When to use the REST API instead:**
+
+**When to use the REST API instead:**
 - You need to query current state (how many viewers right now?)
 - You want to send something to Owncast (post a message, change the title)
 - You need historical data
