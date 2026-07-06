@@ -1,4 +1,4 @@
-# API Reference: Webhooks
+# Webhooks API Reference
 
 This document covers Owncast's webhook system, which lets external applications react to server events (chat messages, stream start/stop, and more) in real time.
 
@@ -6,14 +6,14 @@ This document covers Owncast's webhook system, which lets external applications 
 
 Webhooks are the opposite of polling. Instead of your integration asking Owncast "did anything happen?" on a schedule, Owncast calls your server the moment something happens.
 
-You register a URL. Owncast sends an HTTP POST to that URL whenever a specific event occurs - a stream goes live, a viewer sends a chat message, a user joins. Your server receives the payload and acts on it.
+You register a URL. Owncast sends an HTTP POST to that URL whenever a specific event occurs — a stream goes live, a viewer sends a chat message, a user joins. Your server receives the payload and acts on it.
 
 ```
 Without webhooks (polling):
-Your app –GET /status –> Owncast   (every 5 seconds, most calls return nothing new)
+Your app --GET /status--> Owncast   (every 5 seconds, most calls return nothing new)
  
 With webhooks (push):
-Owncast –POST /your-endpoint –> Your app   (only when something actually happens)
+Owncast --POST /your-endpoint--> Your app   (only when something actually happens)
 ```
 
 **When to use webhooks instead of the REST API:**
@@ -21,8 +21,7 @@ Owncast –POST /your-endpoint –> Your app   (only when something actually hap
 - You want to build a Discord bot that announces when the stream goes live
 - You need to log all chat messages to an external database
 - You want to trigger other services when a specific event occurs
-
-**When to use the REST API instead:**
+  **When to use the REST API instead:**
 - You need to query current state (how many viewers right now?)
 - You want to send something to Owncast (post a message, change the title)
 - You need historical data
@@ -30,13 +29,13 @@ Owncast –POST /your-endpoint –> Your app   (only when something actually hap
 
 ## Authentication
 
-Webhook management endpoints are part of the Admin API. They use HTTP Basic Auth with the admin password - not Bearer tokens.
+Webhook management endpoints are part of the Admin API. They use HTTP Basic Auth with the admin password — not Bearer tokens.
 
 ```
 Authorization: Basic <base64(admin:<your-admin-password>)>
 ```
 
-**Example - encoding credentials:**
+**Example — encoding credentials:**
 
 ```bash
 # Admin password: mypassword
@@ -70,7 +69,7 @@ curl -X GET http://your-server:8080/api/admin/webhooks \
   -H "Authorization: Basic YWRtaW46bXlwYXNzd29yZA=="
 ```
 
-**Response - 200 OK**
+**Response — 200 OK**
 
 ```json
 [
@@ -133,7 +132,7 @@ curl -X POST http://your-server:8080/api/admin/webhooks/create \
   }'
 ```
 
-**Response - 200 OK**
+**Response — 200 OK**
 
 ```json
 {
@@ -145,7 +144,7 @@ curl -X POST http://your-server:8080/api/admin/webhooks/create \
 
 The response contains the newly created webhook object, including the `id` assigned by the server. Store this `id` if you need to delete the webhook later.
 
-**Response - 400 Bad Request**
+**Response — 400 Bad Request**
 
 ```json
 {
@@ -187,7 +186,7 @@ curl -X POST http://your-server:8080/api/admin/webhooks/delete \
   -d '{"id": 3}'
 ```
 
-**Response - 200 OK**
+**Response — 200 OK**
 
 ```json
 {
@@ -196,7 +195,7 @@ curl -X POST http://your-server:8080/api/admin/webhooks/delete \
 }
 ```
 
-**Response - 400 Bad Request**
+**Response — 400 Bad Request**
 
 ```json
 {
@@ -224,7 +223,7 @@ These are the values you can include in the `events` array when creating a webho
 | `STREAM_TITLE_UPDATED` | The stream title is changed |
 | `CONNECTED_CHAT_CLIENT_QUALITY_CHANGE` | A viewer's connection quality changes |
 
-Subscribe only to the events your integration actually needs. Subscribing to `CHAT` on a busy stream sends one POST request per message - plan your endpoint's throughput accordingly.
+Subscribe only to the events your integration actually needs. Subscribing to `CHAT` on a busy stream sends one POST request per message — plan your endpoint's throughput accordingly.
  
 ---
 
@@ -246,7 +245,7 @@ When a subscribed event occurs, Owncast sends a POST request to your registered 
 | Field | Type | Description |
 |---|---|---|
 | `type` | string | The event type that fired (matches values in your `events` list) |
-| [`eventData`](Glossary.md#eventdata) | object | Event-specific payload (structure varies by type - see below) |
+| [`eventData`](Glossary.md#eventdata) | object | Event-specific payload (structure varies by type — see below) |
 
 ### STREAM_STARTED and STREAM_STOPPED
 
@@ -304,7 +303,7 @@ Your webhook endpoint must:
 1. Accept `POST` requests with `Content-Type: application/json`
 2. Read and parse the JSON body
 3. Return HTTP `200` within a reasonable timeout (Owncast does not retry on failure)
-4. Handle events asynchronously - do not block the response while processing
+4. Handle events asynchronously — do not block the response while processing
    **Minimal example in Python (Flask):**
 
 ```python
@@ -406,7 +405,7 @@ curl -X POST http://your-owncast-server:8080/api/admin/webhooks/delete \
 
 | HTTP status | Meaning | Action |
 |---|---|---|
-| `200` | Success | -  |
+| `200` | Success | — |
 | `400` | Bad request | Check request body: missing fields, invalid URL, unknown event type |
 | `401` | Unauthorized | Check Basic Auth credentials; admin password may have changed |
 | `500` | Server error | Check Owncast server logs |
@@ -417,16 +416,14 @@ Owncast does **not** retry failed webhook deliveries. If your endpoint is down w
 
 ## Related resources
 
-- [Architecture Overview](Architecture-Overview.md) - how the `webhooks/` service fits into the overall system
-- [User](User.md) - structure of the `user` object referenced in CHAT and NAME_CHANGE payloads
-- [Chat Message](Chat-Message.md) - full structure of the CHAT payload's message data
-- [Viewer Metrics](Viewer-Metrics.md) - fields carried inside the STREAM_TITLE_UPDATED payload
-- [Full API reference](https://owncast.online/api/latest/#tag/Notifications) - Notifications section
-- [Building integrations](https://owncast.online/thirdparty/) - third-party tools built on Owncast
-- [Access tokens](https://owncast.online/docs/api/) - for REST API integrations that don't need webhooks
-- [Owncast Documentation](Owncast-Documentation.md) - back to overview
+- [Architecture Overview](Architecture-Overview.md) — how the `webhooks/` service fits into the overall system
+- [User](User.md) — structure of the `user` object referenced in CHAT and NAME_CHANGE payloads
+- [Chat Message](Chat-Message.md) — full structure of the CHAT payload's message data
+- [Viewer Metrics](Viewer-Metrics.md) — fields carried inside the STREAM_TITLE_UPDATED payload
+- [Full API reference](https://owncast.online/api/latest/#tag/Notifications) — Notifications section
+- [Building integrations](https://owncast.online/thirdparty/) — third-party tools built on Owncast
+- [Access tokens](https://owncast.online/docs/api/) — for REST API integrations that don't need webhooks
+- [Owncast Documentation](Owncast-Documentation.md) — back to overview
 ---
 
 *Based on Owncast v0.2.4 · [github.com/owncast/owncast](https://github.com/owncast/owncast)*
-
----

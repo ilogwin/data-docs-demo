@@ -23,6 +23,6 @@ CHAT
 
 ## See also
 
-- [User](User.md) - structure of the `user` field
-- [Webhooks API Reference](Webhooks-Api-Reference.md) - full CHAT payload example and receiver code
-- [Owncast Documentation](Owncast-Documentation.md) - back to overview
+- [User](User.md) — structure of the `user` field
+- [Webhooks API Reference](Webhooks-Api-Reference.md) — full CHAT payload example and receiver code
+- [Owncast Documentation](Owncast-Documentation.md) — back to overview
